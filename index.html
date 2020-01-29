@@ -1633,7 +1633,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                             else num0=0
                             let num1=d.properties.main_data[year_1.toString()]
                             let brush_num=num1-num0
-                            if(isNaN(num1-num0)) return ""
+                            if(isNaN(num1-num0)||num1-num0==0) return ""
                                 else return num1-num0
                     }
             })

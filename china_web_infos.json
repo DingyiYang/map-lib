@@ -1,0 +1,35 @@
+{
+    "web_title":
+        "African Swine Fever: First Outbreak in Each Province of China",
+    "chinese_title":
+        "非洲猪瘟:中国各省的首次爆发时间",
+    "data_range":
+        [{"name":"2018/08","id":0,"range":[20180801,20180831]},
+        {"name":"2018/09","id":1,"range":[20180901,20180930]},
+        {"name":"2018/10","id":2,"range":[20181001,20181031]},
+        {"name":"2018/11","id":3,"range":[20181101,20181130]},
+        {"name":"2018/12-2019/01","id":4,"range":[20181201,20190131]}],   
+    "unit":"",
+    "chinese_unit":"",
+    "axis_range":
+        [20180801,20190131],
+    "data_point":
+        [{"year":20180803,"event":"First outbreaked in Liaoning","chinese_event":"首先在辽宁爆发"},
+        {"year":20180901,"event":"","chinese_event":""},
+        {"year":20181001,"event":"Neimenggu, Beijing, Sichuan, Hubei","chinese_event":"内蒙古, 北京, 四川, 湖北"},
+        {"year":20181101,"event":"Yunnan, Heilongjiang","chinese_event":"云南, 黑龙江"},
+        {"year":20181118,"event":"Hunan","chinese_event":"湖南"},
+        {"year":20181201,"event":"Anhui","chinese_event":"安徽"},
+        {"year":20190115,"event":"Liaoning","chinese_event":"辽宁"}],
+    "is_date_data":1,	
+	"is_rect2axis":1,
+    "dataSource":
+        "Food and Agriculture Oragnization of the UN",
+    "data_url":
+        "http://www.fao.org",
+    "mapSource":
+        "github.com/johan/world.geo.json",
+    "map_url":
+        "https://github.com/johan/world.geo.json"
+
+}

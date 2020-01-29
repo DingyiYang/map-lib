@@ -1,0 +1,37 @@
+{
+	"web_title":
+		"African Swine Fever: Global Spread since 1909",
+	"chinese_title":
+		"非洲猪瘟:自1909年的全球传播趋势",
+	"data_range":
+		[{"name":"1909-1956","id":0,"range":[1909,1956]},
+        {"name":"1957-1977","id":1,"range":[1957,1977]},
+        {"name":"1978-1995","id":2,"range":[1978,1995]},
+        {"name":"1996-2009","id":3,"range":[1996,2009]},
+        {"name":"2010-2019","id":4,"range":[2010,2019]}],
+    "axis_range":
+    	[1900,2019],
+    "unit":"",
+    "chinese_unit":"年",
+    "data_point":
+    	[{"year":1909,"event":"First detected in Kenya","chinese_event":"首次在肯尼亚发现"},
+        {"year":1957,"event":"Introduced into Europe","chinese_event":"传播到欧洲"},
+        {"year":1978,"event":"Spread to South America, ","chinese_event":"蔓延到南美,中非"},
+        {"year":1978,"event":"line2:Central Africa  ","chinese_event":"line2:"},
+        {"year":1996,"event":"Outbreak in Ivory Coast","chinese_event":"在科特迪瓦以及周围国家爆发"},
+        {"year":1996,"event":"line2:and countries nearby","chinese_event":"line2:"},
+        {"year":2007,"event":"Spread to Caucasus","chinese_event":"传播到高加索地区"},
+        {"year":2018,"event":"Occurred in China","chinese_event":"在中国爆发"}],
+	"is_date_data":0,	
+	"is_rect2axis":1,
+	"show_detail":0,
+    "dataSource":
+    	"Food and Agriculture Oragnization of the UN",
+    "data_url":
+    	"http://www.fao.org",
+    "mapSource":
+    	"github.com/johan/world.geo.json",
+    "map_url":
+    	"https://github.com/johan/world.geo.json"
+
+}

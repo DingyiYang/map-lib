@@ -2,18 +2,18 @@
 	"web_title":
 		"nCoV: Global Spread since 2020/01/11",
 	"chinese_title":
-		"冠状病毒肺炎:全球传播趋势",
+		"冠状病毒肺炎:全球传播态势",
 	"data_range":
 		[{"name":"1","id":0,"range":[1,1]},
         {"name":"2-4","id":1,"range":[2,4]},
         {"name":"5-10","id":2,"range":[5,10]},
         {"name":"11-49","id":3,"range":[11,49]},
-        {"name":"50-6000","id":4,"range":[50,7000]}],
+        {"name":"50-8000","id":4,"range":[50,8000]}],
     "axis_range":
-    	[20200111,20200128],
+    	[20200111,20200130],
     "unit":"",
 	"chinese_unit":"",
-    "chinese_unit":"年",
+    "chinese_unit":"",
     "data_point":
     	[{"year":20200111,"event":"Outbreak in China","chinese_event":"首次在中国武汉确诊"},
 		{"year":20200113,"event":"First detected in Thailand","chinese_event":"首次在中国以外国家确诊"},
@@ -21,10 +21,15 @@
 	"is_date_data":0,
 	"is_rect2axis":0,
 	"show_detail":1,
+	"show_path":0,
+	"use_brush":0,
+	"use_dragBlock":1,
     "dataSource":
-    	"zh.wikipedia.org/wiki/新型冠狀病毒肺炎全球疫情病例",
+    	"National Health Commission of the People's Republic of China",
+	"dataSource_chinese":
+    	"卫生健康委员会",
     "data_url":
-    	"https://zh.wikipedia.org/wiki/%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8B%80%E7%97%85%E6%AF%92%E8%82%BA%E7%82%8E%E5%85%A8%E7%90%83%E7%96%AB%E6%83%85%E7%97%85%E4%BE%8B",
+    	"https://www.baidu.com/link?url=WzGUlrQ4_bEHBWxkIIYsStz40oAB7OgZtaaw-yqlc_e&wd=&eqid=effd5e710029d9dc000000065e323f58",
     "mapSource":
     	"github.com/johan/world.geo.json",
     "map_url":

@@ -25,7 +25,12 @@
 	"is_date_data":0,	
 	"is_rect2axis":1,
 	"show_detail":0,
+	"show_path":1,
+	"use_brush":1,
+	"use_dragBlock":0,
     "dataSource":
+    	"Food and Agriculture Oragnization of the UN",
+    "dataSource_chinese":
     	"Food and Agriculture Oragnization of the UN",
     "data_url":
     	"http://www.fao.org",

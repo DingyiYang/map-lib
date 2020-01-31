@@ -2,7 +2,7 @@
 	"web_title":
 		"nCoV: Global Spread since 2020/01/11",
 	"chinese_title":
-		"冠状病毒肺炎:全球传播态势",
+		"新型冠状病毒感染肺炎疫情:全球传播态势",
 	"data_range":
 		[{"name":"1","id":0,"range":[1,1]},
         {"name":"2-4","id":1,"range":[2,4]},

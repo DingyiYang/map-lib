@@ -7,9 +7,21 @@
  
     <style>
         html,body{
-            background:rgb(200,200,200);
+            //background:rgb(200,200,200);
+            background:rgb(255,255,255);
             width:100%;
             height:100%;
+        }
+        @font-face {
+            font-family: Khand-Regular;
+            src: url(./font/Khand-Regular.ttf)
+        }
+        @font-face {
+            font-family: PingFang-SC;
+            src: url(./font/PingFang-SC-Regular.ttf)
+        }
+        .source_text{
+            font-family: Khand-Regular PingFang-SC;
         }
         .title{
                 fill:rgb(192,143,145);
@@ -40,15 +52,16 @@
                 text-decoration:underline;
         }
         .state {
-            fill: rgb(160,160,160);
-            stroke: white;
+            //fill: rgb(160,160,160);
+            fill: rgb(243,243,243);
+            stroke: rgb(185,185,185);
             stroke-width: 0.06%;
             cursor:pointer;
         }
         .axis path,
         .axis line{
             fill: none;
-            stroke: black;
+            stroke: rgb(160,160,160);
             stroke-width:0.15vh;
             shape-rendering: crispEdges;
         }
@@ -67,30 +80,30 @@
             fill-opacity: .4;
         }
         .country_text{
-            fill:rgb(50,50,50);
+            fill:rgb(20,20,20);
             fill-opacity:1;
             cursor:pointer;
-            font-family: "Microsoft JhengHei";
-            font-weight: 550;
+            font-weight: bold;
+            font-family: PingFang-SC;
         }
         .country_text2{
-            fill:rgb(50,50,50);
+            fill:rgb(20,20,20);
             fill-opacity:1;
             cursor:pointer;
-            font-family: "Microsoft JhengHei";
             font-weight: bold;
+            font-family: PingFang-SC;
         }
         .mouseover_text_1{
             fill:rgb(50,50,50);
             fill-opacity:.8;
             cursor:pointer;
-            font-family: "Khand-Regular";
+            font-family: PingFang-SC;
         }
         .mouseover_text_2{
             fill:rgb(50,50,50);
             fill-opacity:.8;
             cursor:pointer;
-            font-family: "Khand-Regular";
+            font-family: PingFang-SC;
         }
         .range_name{
             fill:white;
@@ -493,7 +506,7 @@
 
     var color=d3.scaleLinear()
         .domain([0, 4])
-        .range(["rgba(238,140,132,0.8)","rgba(187,0,0,1)" ])
+        .range(["rgba(240,140,131,0.8)","rgba(187,0,0,0.9)" ])
         .interpolate(d3.interpolateHcl);
     /*var color = d3.scaleLinear()
         .domain([0, 4])
@@ -511,7 +524,8 @@
     var tooltip = d3.select("#tooltip");
  
     let proj_world=d3.geoMercator()
-                        .center([0, 16])
+                        //.center([0, 16])
+                        .center([10, 20])
                         .scale(d3.min([width/4.1,height/2.3])*0.7)
                         .translate([width/2, height/2]);
     let proj_china=d3.geoMercator()
@@ -531,9 +545,11 @@
     //如果数据是日期型数据的话，需要初始日期结合
     let start_date
     let stop_year=1909;//表示暂停时所处的年份
-            timelineLen=height*0.35;//时间轴长度
-    timelineX=width*0.12
-            timelineY=height*0.085
+            timelineLen=height*0.3;//时间轴长度
+    //timelineX=width*0.12
+    timelineX=width*0.03
+            //timelineY=height*0.085
+    timelineY=height*0.53
     var tScale=d3.scaleLinear()
                 .domain([axis_start,axis_end])
                 .range([0, timelineLen]);
@@ -668,7 +684,6 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                     .on("mouseover", function (d) {
                         //console.log(d.properties.name)
                         if(d.properties.hasData==1){
-                            inmap=1
                             Showmessage(d);
 
                         }
@@ -678,10 +693,9 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                     .on("mouseout", function (d) {
                         if(d.properties.hasData==1){
                             //console.log("outmap")
-                            inmap=0
                             setTimeout(function(){
-                                if(inmap==0&&intext==0) Regainmessage(d);
-                            },100)
+                                Regainmessage(d);
+                            },300)
                         }
                         tooltip.style("display", "none");
                     });
@@ -825,19 +839,19 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 })
                 .on("mouseover", function (d) {
                         //console.log(d.properties.name)
-                        intext=1
                         if(d.properties.hasData==1){
-                            if(inmap==0) Showmessage(d);
+                            intext=1
+                            Showmessage(d);
                         }
                         //tooltip.style("display", null);
 
                     })
                 .on("mouseout", function (d) {
-                    intext=0
                         if(d.properties.hasData==1){
+                            intext=0
                             setTimeout(function(){
-                                if(inmap==0&&intext==0) Regainmessage(d);
-                            },100)
+                                if(intext==0&&inmap==0) Regainmessage(d);
+                            },300)
                         }
                         //tooltip.style("display", "none");
                 })
@@ -887,9 +901,8 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 })
                 .on("mouseover", function (d) {
                         //console.log(d.properties.name)
-                        intext=1
                         if(d.properties.hasData==1){
-                            if(in_map==0) Showmessage(d);
+                            Showmessage(d);
                         }
                         //tooltip.style("display", null);
 
@@ -898,8 +911,8 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                         intext=0
                         if(d.properties.hasData==1){
                             setTimeout(function(){
-                                if(inmap==0&&intext==0) Regainmessage(d);
-                            },100)
+                                Regainmessage(d);
+                            },300)
                         }
                         //tooltip.style("display", "none");
                     })
@@ -915,6 +928,61 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             if(show_detail==0){
                 return true
             }
+
+            svg.selectAll(".country_num_text_shadow")
+                .data(map_data.features)
+                .enter().append("text")
+                .attr("class","country_num_text_shadow")
+                .text(function (d) {
+                    //console.log(d.id);
+                    if(d.properties.cp!=0&&d.properties.hasData==1){
+                        let temp_data=""
+                        if(is_rect2axis==0) temp_data=d.properties.main_data[axis_end]
+                            else temp_data=d.properties.main_data
+                        return temp_data
+                    }
+                    else return;
+                })
+                .attr("x", function (d) {
+                    if(d.properties.cp==0) return ;
+                    if(d.id!=""){
+                    var local = proj([d.properties.cp[0], d.properties.cp[1]]);
+                    //console.log(local[0]);
+                    return local[0]//-d.properties.name.split(" ")[0].length*0.5*font_scale;
+                }
+                })
+                .attr("y", function (d) {
+                    if(d.properties.cp==0) return ;
+                    if(d.id!=""){
+                    var local = proj([d.properties.cp[0], d.properties.cp[1]]);
+                    if (d.properties.name.split(" ").length==1) return local[1]+18*font_scale;
+                    else return local[1]+28*font_scale;
+                }
+                })
+                .attr("mouseover",function(){
+                    intext=1
+                })
+                .attr("mouseout",function(){
+                    intext=0
+                })
+                .style("text-anchor","middle")
+                .attr("dx",function(d,i){
+                    return d.properties.dx+0.5*font_scale;
+
+                })
+                .attr("dy",function(d,i){
+                    
+                        return d.properties.dy+0.2*font_scale
+                })
+                .attr("font-size", function(d,i){
+                    if(d.properties.main_data==1996) return 12*font_scale
+                        else return 16*font_scale
+                })
+                .style("font-family","Khand-Regular")
+                .style("font-weight","bold")
+                .attr("fill-opacity",1)
+                .attr("opacity",0.6)                         
+                .style("fill", "white")
 
             svg.selectAll(".country_num_text")
                 .data(map_data.features)
@@ -963,13 +1031,14 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 })
                 .attr("font-size", function(d,i){
                     if(d.properties.main_data==1996) return 12*font_scale
-                        else return 12*font_scale
+                        else return 14*font_scale
                 })
                 .style("font-family","Khand-Regular")
                 .style("font-weight","bold")
                 .attr("fill-opacity",1)
                 .attr("opacity",1)                         
-                .attr("fill", "rgba(247,254,174,0.9)")
+                //.attr("fill", "rgba(247,254,110,1)")
+                .style("fill", "rgba(95,0,0,0.97)")
     }
 
     //添加区域的关联数据（颜色、详细信息等）
@@ -988,7 +1057,8 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
     function addAxis(){
 
             let tAxis = d3.axisRight(tScale)
-                .ticks(10)
+                .ticks(0)
+                .tickSizeOuter(0)
                 //.tickValues()
                 .tickFormat(function(v) { // 格式化刻度值
                     return ""
@@ -1022,7 +1092,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                     })
                     .text(function(d,i){
                         if (d.event.split(":").length==2) return d.event.split(":")[1]
-                        return d.year+num_unit+": "+d.event;
+                        return date2str(d.year)+num_unit+": "+d.event;
                     })
                     //.attr("fill","white")
                     .style("fill-opacity",.9);
@@ -1038,10 +1108,11 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                     return "M"+(timelineX)+","+(timelineY+tScale(temp_data))+" L"+(timelineX+width*0.02)+","+(timelineY+tScale(temp_data))
 
                 })
-                .attr("stroke","red")
-                .attr("stroke-dasharray","5,5")
+                .attr("stroke","rgba(160,160,160,0.7)")
+                .attr("stroke-dasharray","3,3")
             //刷选框
             if(use_brush==1){
+                d3.selectAll(".slide_rect").remove()
                 let brush=d3.brushY()
                     .extent([[timelineX-width/60, timelineY], [timelineX, timelineY+timelineLen]])
                     .on("brush end", display);
@@ -1052,7 +1123,10 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                     .call(brush.move, [timelineY,timelineY+timelineLen]);
             }
             
-            if(use_dragBlock==1) addDragBlock()
+            if(use_dragBlock==1){
+                d3.selectAll(".brush").remove()
+                addDragBlock()
+            }
     }
 
     //添加连线和circle
@@ -1196,6 +1270,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             }*/
             var rect_scale=height/27
             var dx_rect=-rect_width-width/32
+            let rectY=height*0.28
             //console.log(data_range)
 
             d3.selectAll(".range_rect").remove()
@@ -1207,21 +1282,21 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 .attr("class","range_rect")
                 .attr("transform","translate(" + 0+ "," +0 + ")")
                 .attr("x",function(d,i){
-                    return timelineX+dx_rect
+                    return timelineX
                 })
                 .attr("y",function(d,i){
                     //return 30+i*(rect_scale+10);
-                    if(is_rect2axis==0) return timelineY+21*i
+                    if(is_rect2axis==0) return rectY+21*font_scale*i
                     if(is_date==1){
-                        return tScale(countGapDays(start_date,d.range[0]))+timelineY
+                        return tScale(countGapDays(start_date,d.range[0]))+rectY
                     }
-                    return tScale(d.range[0])+timelineY
+                    return tScale(d.range[0])+rectY
                 })
                 .attr("width",function(d,i){
                     return rect_width;
                 })
                 .attr("height",function(d){
-                    if(is_rect2axis==0) return 20
+                    if(is_rect2axis==0) return 20*font_scale
                     if(is_date==1){
                         return tScale(countGapDays(start_date,d.range[1]))-tScale(countGapDays(start_date,d.range[0]))
                     }
@@ -1242,7 +1317,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 });
 
             d3.selectAll(".range_name").remove()
-            var text=svg.selectAll(".range_name")
+            var range_text=svg.selectAll(".range_name")
                     .data(data_range)
                     .enter()
                     .append("text")
@@ -1261,12 +1336,12 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
 
                 })
                 .attr("x",function(d,i){
-                    return timelineX+dx_rect;
+                    return timelineX;
                  })
                 .attr("y",function(d,i){
-                    if(is_rect2axis==0) return timelineY+21*i+10
-                    if(is_date==1) return tScale(countGapDays(start_date,d.range[0]))+timelineY+rect_scale*3/5
-                    return tScale(d.range[0])+timelineY+rect_scale*3/5
+                    if(is_rect2axis==0) return rectY+21*i*font_scale+10
+                    if(is_date==1) return tScale(countGapDays(start_date,d.range[0]))+rectY+rect_scale*3/5
+                    return tScale(d.range[0])+rectY+rect_scale*3/5
                 })
                 .text(function(d,i){
                     return ""+d.name;
@@ -1332,12 +1407,12 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             d3.selectAll(".range_text").remove()
             var range_text=svg.append("text")
                         .attr("class","range_text")
-                        .attr("x",timelineX)
+                        .attr("x",timelineX-width*0.01)
                         .attr("y",timelineY+timelineLen+height/25)
                         .text(axis_start+"-"+axis_end)
                         .attr("font-size",18*font_scale)
-                        .style("text-anchor","middle")
-                        .attr("fill","white")
+                        .style("text-anchor","left")
+                        .style("fill","rgba(160,160,160,0.8)")
                         .attr("opacity",1)
     }
 
@@ -1495,7 +1570,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
           //var index = getIndex(pos);
 
           // 滑块只能在0到maxIndex之间滑动，即上层横条内
-            if (pos >= timelineY-slipBlockHeight/2 && pos <= timelineY+timelineLen-slipBlockHeight/2) {
+            if (pos >= timelineY-slipBlockHeight/2 && pos <= timelineY+timelineLen-slipBlockHeight*0.3) {
                     // 移动左滑块和相关背景和文字到鼠标位置
                     d3.select(".slide_rect")
                         .attr("y",pos)
@@ -1515,6 +1590,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             var slipBlockDrag = d3.drag()
                   .on('drag', dragFun);
             // 滑块元素调用拖拽方法
+            d3.selectAll(".slide_rect").remove()
             let slipBlock=svg.append("rect")
                 .attr("class","slide_rect")
                 .attr("width",slipBlockWidth)
@@ -1528,7 +1604,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 .style("opacity",0.7)
             temp_time=axis_end.toString()
             d3.selectAll(".range_text")
-                .text(temp_time)
+                .text(date2str(temp_time))
             slipBlock.call(slipBlockDrag);
     }
 
@@ -1664,7 +1740,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             .style("fill",function(d,i){
                     //console.log(d)
                     if(d.properties.stage=='null'){
-                        return "rgb(160,160,160)"
+                        return "rgb(243,243,243)"
                     }
                     else{
                         return color(d.properties.stage)
@@ -1726,6 +1802,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
     }
 
     function change_to_timerange(year_0,year_1){
+        console.log(year_0,year_1)
         d3.selectAll(".country_num_text")
             .text(function(d){
                 if(is_rect2axis==0){
@@ -1741,11 +1818,25 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                     }
             })
             .style("opacity",1)
+        d3.selectAll(".country_num_text_shadow")
+            .text(function(d){
+                if(is_rect2axis==0){
+                            let num0=0
+                            if(year_0!=axis_start){
+                                let pre_date=countDate(axis_start,countGapDays(axis_start,parseInt(year_0))-1).replaceAll("/","")
+                                num0=d.properties.main_data[pre_date]
+                            }
+                            let num1=d.properties.main_data[year_1.toString()]
+                            let brush_num=num1-num0
+                            if(isNaN(num1-num0)||num1-num0==0) return ""
+                                else return num1-num0
+                    }
+            })
+            .style("opacity",0.6)
         d3.select(".state")
             .selectAll("path")
             .attr("fill",function(d,i){
                     //console.log(d)
-                    if(d.properties.stage=='null') return "rgb(160,160,160)"
                     if(is_rect2axis==0){
                             let num0=0
                             if(parseInt(year_0)!=axis_start){
@@ -1754,9 +1845,12 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                             }
                             let num1=d.properties.main_data[year_1.toString()]
                             let brush_num=num1-num0
-                            if(d.properties.chinese_name=="中国") console.log(num1-num0)
+                            if(d.properties.chinese_name=="加拿大") console.log(num1-num0)
                             for(var k=0;k<data_range.length;k++){
-                                if(brush_num<=data_range[k].range[1]&&brush_num>=data_range[k].range[0]) return color(k)
+                                if(brush_num<=data_range[k].range[1]&&brush_num>=data_range[k].range[0]){
+                                    if(d.properties.chinese_name=="加拿大") console.log(k)
+                                    return color(k)
+                                }
                             }
 
                     }
@@ -1777,7 +1871,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                         //return color(4)
                         return color(d.properties.stage)
                     }                 
-                    else return "rgb(160,160,160)"
+                    else return "rgb(243,243,243)"
                 });
         d3.selectAll(".country_text")
                 .style("fill-opacity",function(d){
@@ -1826,13 +1920,13 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
         d3.selectAll(".range_text")
             .text(function(){
                 if(use_dragBlock==1){
-                        return year_1
+                        return date2str(year_1)
 
                 }
-                else if(is_date==1) return year_0+"-"+year_1
-                return parseInt(year_0)+"-"+parseInt(year_1)
+                else if(is_date==1) return date2str(year_0)+"-"+date2str(year_1)
+                return date2str(parseInt(year_0))+"-"+date2str(parseInt(year_1))
             })
-            .style("fill","white")
+            //.style("fill","white")
             .attr("opacity",1)
         if(hasPath==0) return true
 
@@ -1840,14 +1934,14 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 .style("stroke-width",function(d){
                     if(is_rect2axis==0){
                         return 0
-                            let num0=d.properties.main_data[year_0.toString()]
+                            /*let num0=d.properties.main_data[year_0.toString()]
                             let num1=d.properties.main_data[year_1.toString()]
                             let brush_num=num1-num0
                             //console.log(num1-num0)
                             for(var k=0;k<data_range.length;k++){
                                 if(brush_num<=data_range[k].range[1]&&brush_num>=data_range[k].range[0]) return 2.3
                             }
-                        return 0
+                        return 0*/
 
                     }
                     let temp_data=d.main_data
@@ -1860,13 +1954,13 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 .style("fill",function(d){
                     if(is_rect2axis==0){
                         return 
-                            let num0=d.properties.main_data[year_0.toString()]
+                            /*let num0=d.properties.main_data[year_0.toString()]
                             let num1=d.properties.main_data[year_1.toString()]
                             let brush_num=num1-num0
                             //console.log(num1-num0)
                             for(var k=0;k<data_range.length;k++){
                                 if(brush_num<=data_range[k].range[1]&&brush_num>=data_range[k].range[0]) return ""
-                            }
+                            }*/
 
                     }
                     let temp_data=d.main_data
@@ -1879,14 +1973,14 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 .attr("r",function(d,i){
                     if(is_rect2axis==0){
                         return 0
-                            let num0=d.properties.main_data[year_0.toString()]
+                            /*let num0=d.properties.main_data[year_0.toString()]
                             let num1=d.properties.main_data[year_1.toString()]
                             let brush_num=num1-num0
                             //console.log(num1-num0)
                             for(var k=0;k<data_range.length;k++){
                                 if(brush_num<=data_range[k].range[1]&&brush_num>=data_range[k].range[0]) return 6*font_scale
                             }
-                        return 0
+                        return 0*/
 
                     }
                     let temp_data=d.main_data
@@ -1901,14 +1995,14 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 .style("fill-opacity",function(d,i){
                     if(is_rect2axis==0){
                         return 0
-                            let num0=d.properties.main_data[year_0.toString()]
+                            /*let num0=d.properties.main_data[year_0.toString()]
                             let num1=d.properties.main_data[year_1.toString()]
                             let brush_num=num1-num0
                             //console.log(num1-num0)
                             for(var k=0;k<data_range.length;k++){
                                 if(brush_num<=data_range[k].range[1]&&brush_num>=data_range[k].range[0]) return 6*font_scale
                             }
-                        return 0
+                        return 0*/
 
                     }
                     let temp_data=d.main_data
@@ -1920,25 +2014,26 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
 
     //选择国家显示详细信息
     function Showmessage(temp_country){
+        //console.log("show_message")
 
         dx_remark=width/33
         dy_remark=height/14
         //改变国家的颜色显示
         d3.select(".state")
             .selectAll("path")
-            .transition().duration(300)
+            //.transition().duration(300)
             .attr("fill",function(d){
                 //console.log(d)
                 //console.log(2333)
 
-                if(use_dragBlock==1 && temp_country.properties.main_data[temp_time.toString()]==0) return "rgb(160,160,160)"
+                if(use_dragBlock==1 && temp_country.properties.main_data[temp_time.toString()]==0) return "rgb(243,243,243)"
 
                 else if(hasRelation(d,temp_country)==1||d.properties.name==temp_country.properties.name){
                     if(use_dragBlock==1){
                             let num0=0
                             let num1=d.properties.main_data[temp_time.toString()]
                             let brush_num=num1-num0
-                            if(d.properties.chinese_name=="中国") console.log(num1-num0)
+                            //if(d.properties.chinese_name=="中国") console.log(num1-num0)
                             for(var k=0;k<data_range.length;k++){
                                 if(brush_num<=data_range[k].range[1]&&brush_num>=data_range[k].range[0]) return color(k)
                             }
@@ -1946,7 +2041,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                     else return color(d.properties.stage)
                 }
                 else{
-                    return "rgb(160,160,160)"
+                    return "rgb(243,243,243)"
                 }
                 
             });
@@ -2091,6 +2186,8 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             .attr("font-size",10*font_scale);
         d3.selectAll(".country_num_text")
             .style("opacity",0)
+        d3.selectAll(".country_num_text_shadow")
+            .style("opacity",0)
 
         //改变连线的显示
         d3.selectAll(".links")
@@ -2145,7 +2242,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             .style("fill-opacity",0)
         change_to_timerange(axis_start,temp_time)
         return true
-        d3.select(".state")
+        /*d3.select(".state")
             .selectAll("path")
         .transition().duration(500)
         .attr("fill",function(d,i){
@@ -2230,7 +2327,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             .style("fill-opacity",function(d,i){
                 return 1
             })
-            .style("opacity",show_path)
+            .style("opacity",show_path)*/
 
 
     }
@@ -2255,6 +2352,16 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             }
             if(show_detail==1){
                 d3.selectAll(".country_num_text")
+                    .transition()
+                    .duration(duration_time)
+                    .text(function(d){
+                        if(is_rect2axis==0){
+                            let brush_num=d.properties.main_data[parseInt(start).toString()]
+                            if(isNaN(brush_num)||brush_num==0) return ""
+                                else return brush_num
+                        }
+                    })
+                d3.selectAll(".country_num_text_shadow")
                     .transition()
                     .duration(duration_time)
                     .text(function(d){
@@ -2289,7 +2396,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                                 return color(d.properties.stage)
                             }
                             else{
-                                return "rgb(160,160,160)"
+                                return "rgb(243,243,243)"
                             }
                         }
                         }); 
@@ -2375,8 +2482,8 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             })
 
         d3.selectAll(".range_text")
-            .text(axis_start+"-"+parseInt(start))
-            .style("fill","white")
+            .text(date2str(axis_start)+"-"+date2str(parseInt(start)))
+            //.style("fill","white")
             .style("opacity",1)
         let gap_num=axis_end-axis_start
             if(play_flag==0){
@@ -2605,7 +2712,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             d3.selectAll(".point_text")
                 .text(function(d,i){
                     if (d.chinese_event.split(":").length==2) return d.chinese_event.split(":")[1]
-                    return d.year+chineses_unit+": "+d.chinese_event;
+                    return date2str(d.year)+chineses_unit+": "+d.chinese_event;
                 });
             d3.selectAll(".source1")
                 .text("数据来源: "+dataSource_chinese)
@@ -2646,6 +2753,16 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 .text(web_title)
 
         }
+    }
+
+    //改成带斜线的日期格式
+    function date2str(int_date){
+        int_date=int_date.toString()
+        let date_str=""
+        date_str+=(int_date.substr(0,4)+"/")      
+        date_str+=(int_date.substr(4,2)+"/")      
+        date_str+=(int_date.substr(6,2))
+        return date_str
     }
 
     //根据时间轴的开始日期和中间间隔的天数计算出对应的日期

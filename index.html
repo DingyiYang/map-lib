@@ -117,6 +117,9 @@
             cursor:pointer;
             font-family: PingFang-SC;
         }
+        .country_num_text{
+            cursor: pointer;
+        }
         .range_name{
             fill:white;
             fill-opacity:0.8;
@@ -440,6 +443,7 @@
     let isEnd=1;
     let inline=0;
     let incircle=0;
+    let isregain=1;
     //范围数据（可以是时间范围或者数据范围）
     let web_title
     let chinese_title
@@ -720,14 +724,17 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                         }
                         
                     })
-                    .on("mouseover", function (d) {
+                    .on("click",function(d){
+                            Showmessage(d)
+                    })
+                    .on("mouseout",function(d){
+                        if(isregain==0) Regainmessage(d)
+                    })
+                    /*.on("mouseover", function (d) {
                         //console.log(d.properties.name)
                         if(d.properties.hasData==1){
                             Showmessage(d);
-
                         }
-                        //tooltip.style("display", null);
-
                     })
                     .on("mouseout", function (d) {
                         if(d.properties.hasData==1){
@@ -737,7 +744,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                             },300)
                         }
                         tooltip.style("display", "none");
-                    });
+                    });*/
             d3.select("#southsea").attr("opacity",function(){
                         if(temp_map=="china") return 0.8
                         else return 0
@@ -888,7 +895,13 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 .attr("dy",function(d,i){              
                     return d.properties.dy
                 })
-                .on("mouseover", function (d) {
+                    .on("click",function(d){
+                            Showmessage(d)
+                    })
+                    .on("mouseout",function(d){
+                        if(isregain==0) Regainmessage(d)
+                    })
+                /*.on("mouseover", function (d) {
                         //console.log(d.properties.name)
                         if(d.properties.hasData==1){
                             intext=1
@@ -904,8 +917,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                                 if(intext==0&&inmap==0) Regainmessage(d);
                             },300)
                         }
-                        //tooltip.style("display", "none");
-                })
+                */
                 .attr("font-size", function(d,i){
                     if(d.properties.main_data==1996) return 8*font_scale
                         else return 11*font_scale
@@ -950,7 +962,13 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                     
                         return d.properties.dy
                 })
-                .on("mouseover", function (d) {
+                .on("click",function(d){
+                            Showmessage(d)
+                    })
+                .on("mouseout",function(d){
+                        if(isregain==0) Regainmessage(d)
+                    })
+                /*.on("mouseover", function (d) {
                         //console.log(d.properties.name)
                         if(d.properties.hasData==1){
                             intext=1
@@ -967,7 +985,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                             },300)
                         }
                         //tooltip.style("display", "none");
-                    })
+                    })*/
                 .attr("font-size", function(d,i){
                     if(d.properties.main_data==1996) return 8*font_scale
                         else return 11*font_scale
@@ -1062,16 +1080,22 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                     if(d.properties.cp==0) return ;
                     if(d.id!=""){
                     var local = proj([d.properties.cp[0], d.properties.cp[1]]);
-                    if (d.properties.chinese_name.split(" ").length==1) return local[1]+18*font_scale;
+                    if(temp_lan=="chinese"||(d.properties.chinese_name.split(" ").length==1)) return local[1]+18*font_scale;
                     else return local[1]+28*font_scale;
                 }
                 })
-                .attr("mouseover",function(){
+                /*.attr("mouseover",function(){
                     intext=1
                 })
                 .attr("mouseout",function(){
                     intext=0
-                })
+                })*/               
+                    .on("click",function(d){
+                            Showmessage(d)
+                    })
+                    .on("mouseout",function(d){
+                        if(isregain==0) Regainmessage(d)
+                    })
                 .style("text-anchor","middle")
                 .attr("dx",function(d,i){
                     return d.properties.dx;
@@ -1988,13 +2012,17 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
         d3.selectAll(".country_text2")
                 .style("fill-opacity",function(d){
                     if(is_rect2axis==0){
-                        let num0=d.properties.main_data[year_0.toString()]
-                        let num1=d.properties.main_data[year_1.toString()]
-                        let brush_num=num1-num0
-                        //console.log(num1-num0)
-                        for(var k=0;k<data_range.length;k++){
-                            if(brush_num<=data_range[k].range[1]&&brush_num>=data_range[k].range[0]) return .9
-                        }
+                        let num0=0
+                            if(parseInt(year_0)!=axis_start){
+                                let pre_date=countDate(axis_start,countGapDays(axis_start,parseInt(year_0))-1).replaceAll("/","")
+                                num0=d.properties.main_data[pre_date]
+                            }
+                            let num1=d.properties.main_data[year_1.toString()]
+                            let brush_num=num1-num0
+                            //console.log(num1-num0)
+                            for(var k=0;k<data_range.length;k++){
+                                if(brush_num<=data_range[k].range[1]&&brush_num>=data_range[k].range[0]) return .9
+                            }
                         return 0
 
                     }
@@ -2102,6 +2130,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
 
     //选择国家显示详细信息
     function Showmessage(temp_country){
+        isregain=0
         //console.log("show_message")
 
         dx_remark=width/33
@@ -2343,6 +2372,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
 
     //移开后恢复
     function Regainmessage(temp_country){
+        isregain=1
         d3.selectAll(".viewrect")
             .style("fill-opacity",0)
         d3.selectAll(".mouseover_text_1")
@@ -2611,8 +2641,8 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                     start=parseInt(countDate(parseInt(start),1).replaceAll("/",""))
                 }
                 }
-                else start=start+0.035
-                if(start+0.035>parseInt(start)+1){
+                else start=start+0.04
+                if(start+0.04>parseInt(start)+1){
                     start=parseInt(countDate(parseInt(start),1).replaceAll("/",""))
                 }
             }
@@ -2828,6 +2858,23 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 .text(function(d){
                     return ""
                 })
+            d3.selectAll(".country_num_text")
+                .attr("y",function(d){
+                    if(d.properties.cp==0) return ;
+                    if(d.id!=""){
+                    var local = proj([d.properties.cp[0], d.properties.cp[1]]);
+                    return local[1]+18*font_scale;
+                }
+                })
+            d3.selectAll(".country_num_text_shadow")
+                .attr("y",function(d){
+                    if(d.properties.cp==0) return ;
+                    if(d.id!=""){
+                    var local = proj([d.properties.cp[0], d.properties.cp[1]]);
+                    return local[1]+18*font_scale;
+
+                }
+                })
 
             d3.selectAll(".point_text")
                 .text(function(d,i){
@@ -2858,6 +2905,24 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 .text(function(d){
                     if(d.properties.hasData==1) return d.properties.name.split(" ")[1]
                     return ""
+                })
+            d3.selectAll(".country_num_text")
+                .attr("y",function(d){
+                    if(d.properties.cp==0) return ;
+                    if(d.id!=""){
+                    var local = proj([d.properties.cp[0], d.properties.cp[1]]);
+                    if((d.properties.name.split(" ").length==1)) return local[1]+18*font_scale;
+                    else return local[1]+28*font_scale;
+                }
+                })
+            d3.selectAll(".country_num_text_shadow")
+                .attr("y",function(d){
+                    if(d.properties.cp==0) return ;
+                    if(d.id!=""){
+                    var local = proj([d.properties.cp[0], d.properties.cp[1]]);
+                    if((d.properties.name.split(" ").length==1)) return local[1]+18*font_scale;
+                    else return local[1]+28*font_scale;
+                }
                 })
 
             d3.selectAll(".point_text")

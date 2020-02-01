@@ -138,9 +138,15 @@
             position: absolute;
             bottom: 0px;
             width: 100%;
-            font-size:2vmin;
+            height: 6%;
+            font-size:1.5vmin;
             color: rgb(60,60,60);
             font-family: Khand-Regular;
+        }
+        #floor_text{           
+            position: absolute;
+            top:0;
+            left:44%;
         }
         #header{
             position: absolute;
@@ -299,6 +305,14 @@
       left: 1%;
       height: 8vmin;
       width: 4vmin;
+  }
+  #icon_img{
+      position: absolute;
+      top: 5%;
+      left: 41%;
+      height: 3.8vmin;
+      width: 3.8vmin;
+  }
 
     </style>
 </head>
@@ -311,7 +325,11 @@
 </div>
 <div class="mapPanel">
     <div id="floor">
-      &copy PKU Visualization and Visual Analytics Group
+        <img id="icon_img" src="icon.png"/>
+        <div id="floor_text">
+        北京大学可视化与可视分析实验室<br>
+        PKU Visualization and Visual Analytics Group
+        </div>
     </div>
 </div>
 <!--div class="partitionLine"><hr style="height:100vh;fill:rgb(60,60,60)"></div!-->
@@ -533,6 +551,8 @@
         .attr("width", width)
         .attr("height", height)
         .append("g")
+    d3.select("#floor")
+        .style("bottom",(svg_y/screen.height)*100+"%")
         //.attr("transform", "translate(0,0)");
  
 
@@ -564,7 +584,7 @@
     //timelineX=width*0.12
     timelineX=width*0.03
             //timelineY=height*0.085
-    timelineY=height*0.53
+    timelineY=height*0.58
     var tScale=d3.scaleLinear()
                 .domain([axis_start,axis_end])
                 .range([0, timelineLen]);
@@ -1304,7 +1324,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             }*/
             var rect_scale=height/27
             var dx_rect=-rect_width-width/32
-            let rectY=height*0.28
+            let rectY=height*0.35
             //console.log(data_range)
 
             d3.selectAll(".range_rect").remove()
@@ -1392,21 +1412,21 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                       .attr("x",width*0.02)
                       .attr("y",height*0.05)
                       .attr("class", "shadow shadow_title")
-                      .attr("font-size",20*font_scale)
+                      .attr("font-size",22*font_scale)
                       .text(web_title);
             d3.selectAll(".title").remove()  
             var title=svg.append("text")
                                 .attr("class","title")
                                 .attr("x",width*0.02)
                                 .attr("y",height*0.05)
-                                .attr("font-size",20*font_scale)
+                                .attr("font-size",22*font_scale)
                                 .text(web_title)
             d3.selectAll(".subtitle").remove()  
             var title=svg.append("text")
                                 .attr("class","subtitle")
                                 .attr("x",width*0.02)
                                 .attr("y",height*0.09)
-                                .attr("font-size",12*font_scale)
+                                .attr("font-size",14*font_scale)
                                 .text(function(){
                                     if(temp_lan=="chinese") return sub_tiltle_chinese
                                         else return sub_tiltle
@@ -1428,7 +1448,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 })*/
                 .attr("cursor","pointer")
                 .on("click",function(){
-                    window.open("http://www.fao.org");
+                    window.open(""+data_url);
                 })
 
             let map_source=svg.append("text")
@@ -1446,7 +1466,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 })*/             
                 .attr("cursor","pointer")
                 .on("click",function(){
-                    window.open("https://github.com/johan/world.geo.json");
+                    window.open(""+map_url);
                 })
 
             //刷选以及播放动画时显示的范围
@@ -1470,7 +1490,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
         if(hasButton==false){
             return
         }
-        button_center=[width*8/9,height*0.86]
+        button_center=[proj_world([157,0])[0],height*0.88]
             button_r=height/22
 
             //button的渐变填充

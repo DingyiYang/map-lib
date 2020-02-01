@@ -140,7 +140,8 @@
             margin: 0px auto;
             position: absolute;
             bottom: 0px;
-            width: 100%;
+            left:40%;
+            width: 50%;
             height: 6%;
             font-size:1.5vmin;
             color: rgb(60,60,60);
@@ -149,7 +150,7 @@
         #floor_text{           
             position: absolute;
             top:0;
-            left:44%;
+            left:4vmin;
         }
         #header{
             position: absolute;
@@ -312,7 +313,7 @@
   #icon_img{
       position: absolute;
       top: 5%;
-      left: 41%;
+      left: 0;
       height: 3.8vmin;
       width: 3.8vmin;
   }
@@ -523,13 +524,7 @@
     height=height-svg_y*2
     //console.log("width="+width)
     //console.log("height="+height)
-    if(height>width*screen_scale3){
-        svg_y=height/8
-        height=height*3/4
-        width=height/screen_scale2
-        font_scale=Math.min(height/window.screen.height,width/window.screen.width)*1.2
-    }
-    else if(height>width*screen_scale2){
+    if(height>width*screen_scale2){
         svg_y=(height-width*screen_scale2)/2
         height=width*screen_scale2
         font_scale=Math.min(height/window.screen.height,width/window.screen.width)*1.2

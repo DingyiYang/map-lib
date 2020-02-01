@@ -515,7 +515,8 @@
     let width=$('.mapPanel').width()
     //高度
     let height=$('.mapPanel').height()
-    font_scale=Math.min(height/screen.height,width/screen.width)*1.2
+    //font_scale=Math.min(height/screen.height,width/screen.width)*1.2
+    font_scale=Math.min(height/window.screen.height,width/window.screen.width)*1.2
     let svg_x=height*0.005
     let svg_y=height*0.005
     width=width-svg_x*2
@@ -526,17 +527,17 @@
         svg_y=height/8
         height=height*3/4
         width=height/screen_scale2
-        font_scale=Math.min(height/screen.height,width/screen.width)*1.2
+        font_scale=Math.min(height/window.screen.height,width/window.screen.width)*1.2
     }
     else if(height>width*screen_scale2){
         svg_y=(height-width*screen_scale2)/2
         height=width*screen_scale2
-        font_scale=Math.min(height/screen.height,width/screen.width)*1.2
+        font_scale=Math.min(height/window.screen.height,width/window.screen.width)*1.2
     }
     else if(width>height/screen_scale){
         svg_x=(width-height/screen_scale)/2
         width=height/screen_scale
-        font_scale=Math.min(height/screen.height,width/screen.width)*1.2
+        font_scale=Math.min(height/window.screen.height,width/window.screen.width)*1.2
     }
     //console.log(width)
     //console.log(height)
@@ -555,6 +556,7 @@
         .attr("width", width)
         .attr("height", height)
         .append("g")
+
     d3.select("#floor")
         .style("bottom",(svg_y/screen.height)*100+"%")
         //.attr("transform", "translate(0,0)");
@@ -706,10 +708,21 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             svg.selectAll(".state").remove()
             //svg.selectAll(".states").remove()
 
+            svg.append("rect")
+                .attr("width",width)
+                .attr("height",height)
+                .attr("x",0)
+                .attr("y",0)
+                .attr("fill","rgb(255,255,255)")
+                .on("click",function()
+                {
+                    if(isregain==0) Regainmessage()
+                })
             //绘制国家
-            svg.append("g")
+            let state=svg.append("g")
                 .attr("class","state")
-                    .selectAll("path")
+
+            state.selectAll("path")
                     .data(map_data.features)
                     .enter()
                     .append("path")              

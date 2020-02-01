@@ -19,7 +19,7 @@
 	"chinese_unit":"",
     "chinese_unit":"",
     "data_point":
-    	[{"year":20191231,"event":"Report of pneumonia with unknown causes in China","chinese_event":"中国卫健委证实武汉出现不明原因肺炎病人"},
+    	[{"year":20191231,"event":"Report of pneumonia with unknown causes in China","chinese_event":"武汉出现不明原因肺炎病人"},
 		{"year":20200111,"event":"Report of 41 confirmed cases in China","chinese_event":"中国武汉确诊41例新型冠状病毒"},
 		{"year":20200113,"event":"First detected in Thailand","chinese_event":"首次在中国以外国家确诊"},
 		{"year":20200121,"event":"First detected in America","chinese_event":"首次在美国确诊"},

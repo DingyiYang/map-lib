@@ -588,7 +588,7 @@
     //timelineX=width*0.12
     timelineX=width*0.03
             //timelineY=height*0.085
-    timelineY=height*0.58
+    timelineY=height*0.52
     var tScale=d3.scaleLinear()
                 .domain([axis_start,axis_end])
                 .range([0, timelineLen]);
@@ -680,7 +680,8 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
 
             axis_start=axis_range[0];
             axis_end=axis_range[1];
-            let axis_0,axis_1
+            let axis_0=axis_start
+            let axis_1=axis_end
             //如果是日期型数据
             if(is_date==1||is_rect2axis==0){
                 start_date=axis_range[0]
@@ -1164,7 +1165,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                         let temp_data=d.year
                         if(is_date==1||is_rect2axis==0) temp_data=countGapDays(start_date,temp_data)
                         if (d.event.split(":").length==2) return timelineY+tScale(temp_data)+height*0.007*3
-                        return timelineY+tScale(temp_data)+height*0.007
+                        else return timelineY+tScale(temp_data)+height*0.007
                     })
                     .text(function(d,i){
                         if (d.event.split(":").length==2) return d.event.split(":")[1]
@@ -1348,7 +1349,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             }*/
             var rect_scale=height/27
             var dx_rect=-rect_width-width/32
-            let rectY=height*0.35
+            let rectY=height*0.3
             //console.log(data_range)
 
             d3.selectAll(".range_rect").remove()
@@ -1364,7 +1365,8 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 })
                 .attr("y",function(d,i){
                     //return 30+i*(rect_scale+10);
-                    if(is_rect2axis==0) return rectY+21*font_scale*i
+                    //if(is_rect2axis==0) 
+                        return rectY+21*font_scale*i
                     if(is_date==1){
                         return tScale(countGapDays(start_date,d.range[0]))+rectY
                     }
@@ -1417,7 +1419,8 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                     return timelineX;
                  })
                 .attr("y",function(d,i){
-                    if(is_rect2axis==0) return rectY+21*i*font_scale+10
+                    //if(is_rect2axis==0)
+                        return rectY+21*i*font_scale+10
                     if(is_date==1) return tScale(countGapDays(start_date,d.range[0]))+rectY+rect_scale*3/5
                     return tScale(d.range[0])+rectY+rect_scale*3/5
                 })
@@ -1504,6 +1507,39 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                         .style("text-anchor","left")
                         .style("fill","rgba(160,160,160,0.8)")
                         .attr("opacity",1)
+                        .style("font-family","Khand-Regular")
+            d3.selectAll(".overview_country").remove()
+            d3.selectAll(".overview_num").remove()
+            if(is_rect2axis==0){
+                let overview_country=svg.append("text")
+                        .attr("class","overview_country")
+                        .attr("x",timelineX-width*0.01)
+                        .attr("y",timelineY+timelineLen+height/25+22*font_scale)
+                        .text(function(){
+                            console.log(map_data.overview)
+                            return "Countries: "+map_data.overview[axis_end.toString()].country_num
+                        })
+                        .attr("font-size",17*font_scale)
+                        .style("text-anchor","left")
+                        .style("font-family","Khand-Regular")
+                        //.attr("font-weight","bold")
+                        .style("fill","rgba(160,160,160,0.8)")
+                        .attr("opacity",1)
+                let overview_num=svg.append("text")
+                        .attr("class","overview_num")
+                        .attr("x",timelineX-width*0.01)
+                        .attr("y",timelineY+timelineLen+height/25+42*font_scale)
+                        .text(function(){
+                            console.log(map_data.overview)
+                            return "Confirmed: "+map_data.overview[axis_end.toString()].data_sum
+                        })
+                        .attr("font-size",17*font_scale)
+                        .style("text-anchor","left")
+                        .style("font-family","Khand-Regular")
+                        //.attr("font-weight","bold")
+                        .style("fill","rgba(160,160,160,0.8)")
+                        .attr("opacity",1)
+            }
     }
 
     //添加播放按钮
@@ -1915,6 +1951,20 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
 
     function change_to_timerange(year_0,year_1){
         console.log(year_0,year_1)
+        d3.selectAll(".overview_country")
+            .text(function(){
+                            let t_country=0
+                            if(map_data.overview.hasOwnProperty(year_1.toString())!=false) t_country=map_data.overview[year_1.toString()].country_num
+                            if(temp_lan=="english") return "Countries: "+t_country
+                                else return "国家: "+t_country
+                        })
+        d3.selectAll(".overview_num")
+            .text(function(){
+                            let t_num=0
+                            if(map_data.overview.hasOwnProperty(year_1.toString())!=false) t_num=map_data.overview[year_1.toString()].data_sum
+                            if(temp_lan=="english") return "Confirmed: "+t_num
+                                else return "确诊: "+t_num
+                        })
         d3.selectAll(".country_num_text")
             .text(function(d){
                 if(is_rect2axis==0){
@@ -2511,11 +2561,27 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                         }
                     })
             }
-            //移动滑块
-            d3.selectAll(".slide_rect")
+            //移动滑块，改变国家数量
+            if(use_dragBlock==1){
+                d3.selectAll(".slide_rect")
                 .attr("y",function(d,i){
                     return timelineY+timelineLen*countGapDays(axis_start,start)/countGapDays(axis_start,axis_end)-8*font_scale
                 })
+                d3.selectAll(".overview_country")
+                    .text(function(){
+                                    let t_country=0
+                                    if(map_data.overview.hasOwnProperty(parseInt(start).toString())!=false) t_country=map_data.overview[parseInt(start).toString()].country_num
+                                    if(temp_lan=="english") return "Countries: "+t_country
+                                        else return "国家: "+t_country
+                                })
+                d3.selectAll(".overview_num")
+                    .text(function(){
+                                    let t_num=0
+                                    if(map_data.overview.hasOwnProperty(parseInt(start).toString())!=false) t_num=map_data.overview[parseInt(start).toString()].data_sum
+                                    if(temp_lan=="english") return "Confirmed: "+t_num
+                                        else return "确诊: "+t_num
+                                })
+             }
 
             d3.select(".state")
                 .selectAll("path")
@@ -2879,7 +2945,8 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             d3.selectAll(".point_text")
                 .text(function(d,i){
                     if (d.chinese_event.split(":").length==2) return d.chinese_event.split(":")[1]
-                    return date2str(d.year)+chineses_unit+": "+d.chinese_event;
+                    if(is_rect2axis==0) return date2str(d.year)+chineses_unit+": "+d.chinese_event;
+                    else return d.year+chineses_unit+": "+d.chinese_event;
                 });
             d3.selectAll(".source1")
                 .text("数据来源: "+dataSource_chinese)
@@ -2891,6 +2958,20 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 .text(chinese_title)
             d3.selectAll(".subtitle")
                 .text(sub_tiltle_chinese)
+            if(use_dragBlock==1){
+                d3.selectAll(".overview_country")
+                    .text(function(){
+                                    let t_country=0
+                                    if(map_data.overview.hasOwnProperty(temp_time.toString())!=false) t_country=map_data.overview[temp_time.toString()].country_num
+                                    return "国家: "+t_country
+                                })
+                d3.selectAll(".overview_num")
+                    .text(function(){
+                                    let t_num=0
+                                    if(map_data.overview.hasOwnProperty(temp_time.toString())!=false) t_num=map_data.overview[temp_time.toString()].data_sum
+                                    return "确诊: "+t_num
+                                })
+             }
 
         }
         else if(temp_lan=="chinese"){
@@ -2928,7 +3009,8 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
             d3.selectAll(".point_text")
                 .text(function(d,i){
                     if (d.chinese_event.split(":").length==2) return d.event.split(":")[1]
-                    return date2str(d.year)+num_unit+": "+d.event;
+                    if(is_rect2axis==0) return date2str(d.year)+num_unit+": "+d.event;
+                    else return d.year+num_unit+": "+d.event;
                 });
             d3.selectAll(".source1")
                 .text("Data Source: "+dataSource)
@@ -2940,6 +3022,20 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 .text(web_title)
             d3.selectAll(".subtitle")
                 .text(sub_tiltle)
+            if(use_dragBlock==1){
+                d3.selectAll(".overview_country")
+                    .text(function(){
+                                    let t_country=0
+                                    if(map_data.overview.hasOwnProperty(temp_time.toString())!=false) t_country=map_data.overview[temp_time.toString()].country_num
+                                    return "Countries: "+t_country
+                                })
+                d3.selectAll(".overview_num")
+                    .text(function(){
+                                    let t_num=0
+                                    if(map_data.overview.hasOwnProperty(temp_time.toString())!=false) t_num=map_data.overview[temp_time.toString()].data_sum
+                                    return "Confirmed: "+t_num
+                                })
+             }
 
         }
     }

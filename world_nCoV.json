@@ -51834,5 +51834,91 @@
         ]
       }
     }
-  ]
+  ],
+  "overview": {
+    "20200111": {
+      "data_sum": 41,
+      "country_num": 1
+    },
+    "20200112": {
+      "data_sum": 41,
+      "country_num": 1
+    },
+    "20200113": {
+      "data_sum": 42,
+      "country_num": 2
+    },
+    "20200114": {
+      "data_sum": 42,
+      "country_num": 2
+    },
+    "20200115": {
+      "data_sum": 43,
+      "country_num": 3
+    },
+    "20200116": {
+      "data_sum": 47,
+      "country_num": 3
+    },
+    "20200117": {
+      "data_sum": 65,
+      "country_num": 3
+    },
+    "20200118": {
+      "data_sum": 124,
+      "country_num": 3
+    },
+    "20200119": {
+      "data_sum": 202,
+      "country_num": 3
+    },
+    "20200120": {
+      "data_sum": 295,
+      "country_num": 4
+    },
+    "20200121": {
+      "data_sum": 446,
+      "country_num": 5
+    },
+    "20200122": {
+      "data_sum": 580,
+      "country_num": 5
+    },
+    "20200123": {
+      "data_sum": 845,
+      "country_num": 7
+    },
+    "20200124": {
+      "data_sum": 1314,
+      "country_num": 9
+    },
+    "20200125": {
+      "data_sum": 2017,
+      "country_num": 12
+    },
+    "20200126": {
+      "data_sum": 2800,
+      "country_num": 12
+    },
+    "20200127": {
+      "data_sum": 4579,
+      "country_num": 13
+    },
+    "20200128": {
+      "data_sum": 6058,
+      "country_num": 15
+    },
+    "20200129": {
+      "data_sum": 7812,
+      "country_num": 17
+    },
+    "20200130": {
+      "data_sum": 9822,
+      "country_num": 20
+    },
+    "20200131": {
+      "data_sum": 11945,
+      "country_num": 24
+    }
+  }
 }

@@ -742,7 +742,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                             Showmessage(d)
                     })
                     .on("mouseout",function(d){
-                        if(isregain==0) Regainmessage(d)
+                        if(isregain==0) Regainmessage()
                     })
                     /*.on("mouseover", function (d) {
                         //console.log(d.properties.name)
@@ -754,7 +754,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                         if(d.properties.hasData==1){
                             //console.log("outmap")
                             setTimeout(function(){
-                                Regainmessage(d);
+                                Regainmessage();
                             },300)
                         }
                         tooltip.style("display", "none");
@@ -913,7 +913,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                             Showmessage(d)
                     })
                     .on("mouseout",function(d){
-                        if(isregain==0) Regainmessage(d)
+                        if(isregain==0) Regainmessage()
                     })
                 /*.on("mouseover", function (d) {
                         //console.log(d.properties.name)
@@ -928,7 +928,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                         if(d.properties.hasData==1){
                             intext=0
                             setTimeout(function(){
-                                if(intext==0&&inmap==0) Regainmessage(d);
+                                if(intext==0&&inmap==0) Regainmessage();
                             },300)
                         }
                 */
@@ -980,7 +980,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                             Showmessage(d)
                     })
                 .on("mouseout",function(d){
-                        if(isregain==0) Regainmessage(d)
+                        if(isregain==0) Regainmessage()
                     })
                 /*.on("mouseover", function (d) {
                         //console.log(d.properties.name)
@@ -995,7 +995,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                         intext=0
                         if(d.properties.hasData==1){
                             setTimeout(function(){
-                                if(intext==0&&inmap==0) Regainmessage(d);
+                                if(intext==0&&inmap==0) Regainmessage();
                             },300)
                         }
                         //tooltip.style("display", "none");
@@ -1108,7 +1108,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                             Showmessage(d)
                     })
                     .on("mouseout",function(d){
-                        if(isregain==0) Regainmessage(d)
+                        if(isregain==0) Regainmessage()
                     })
                 .style("text-anchor","middle")
                 .attr("dx",function(d,i){
@@ -1338,7 +1338,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                         Showmessage(d);
                     })
                     .on("mouseout",function(d){
-                        Regainmessage(d)
+                        Regainmessage()
                     })*/
                     .on("mouseover", function (d) {
                         inmap=1
@@ -2434,7 +2434,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
     }
 
     //移开后恢复
-    function Regainmessage(temp_country){
+    function Regainmessage(){
         isregain=1
         d3.selectAll(".viewrect")
             .style("fill-opacity",0)

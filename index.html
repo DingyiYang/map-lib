@@ -1429,7 +1429,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                  })
                 .attr("y",function(d,i){
                     //if(is_rect2axis==0)
-                        return rectY+21*i*font_scale+10
+                        return rectY+21*i*font_scale+12*font_scale
                     if(is_date==1) return tScale(countGapDays(start_date,d.range[0]))+rectY+rect_scale*3/5
                     return tScale(d.range[0])+rectY+rect_scale*3/5
                 })

@@ -718,6 +718,7 @@ d3.xml("southchinasea.svg", function(error, xmlDocument) {
                 {
                     if(isregain==0) Regainmessage()
                 })
+                .style("opacity",0)
             //绘制国家
             let state=svg.append("g")
                 .attr("class","state")
